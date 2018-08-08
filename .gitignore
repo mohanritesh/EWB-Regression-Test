@@ -33,7 +33,7 @@ hs_err_pid*
 *~
 .checkstyle
 .settings/
-/target/
+target/
 *.orig
 .idea
-/test-output/
+test-output/
