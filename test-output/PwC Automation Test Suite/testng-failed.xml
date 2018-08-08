@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [PwC Automation Test Suite]">
+  <test thread-count="5" name="PwC Application Test Cases(failed)">
+    <classes>
+      <class name="com.pwc.qa.testcases.HomePageTest">
+        <methods>
+          <include name="tearDown"/>
+          <include name="setup"/>
+          <include name="verifyHomePageTitleTest"/>
+        </methods>
+      </class> <!-- com.pwc.qa.testcases.HomePageTest -->
+    </classes>
+  </test> <!-- PwC Application Test Cases(failed) -->
+</suite> <!-- Failed suite [PwC Automation Test Suite] -->
