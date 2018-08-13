@@ -16,8 +16,7 @@ public class TestUtil extends TestBase {
 	public static long PAGE_LOAD_TIMEOUT = 30;
 	public static long IMPLICIT_WAIT = 20;
 	
-	public static String TESTDATA_SHEET_PATH = "D:\\Rajneesh\\Software"
-			+ "\\PWCAutomationTest\\src\\main\\java\\com\\pwc\\qa\\testdata\\PwCTestData.xlsx";
+	public static String TESTDATA_SHEET_PATH = "D:\\PWC_Project\\EWB-Regression-Test\\src\\main\\java\\com\\pwc\\qa\\testdata\\PwCTestData.xlsx";
 	
 	//public static String TESTDATA_SHEET_PATH = "//PWCAutomationTest//src//main//java//com//pwc//qa//testdata//PwCTestData.xlsx";
 	
