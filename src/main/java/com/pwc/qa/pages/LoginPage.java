@@ -39,7 +39,9 @@ public class LoginPage extends TestBase {
 		loginBtn.click();
 		return new HomePage();
 	}
-	
+	public void validateuserlogin() {
+		
+	}
 	
 	
 	

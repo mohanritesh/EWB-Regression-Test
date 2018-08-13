@@ -15,6 +15,9 @@ public class HomePage extends TestBase {
 	@FindBy(xpath="(//a[contains(text(),'EWB')])[2]")
 	WebElement ewbLink;
 	
+	@FindBy(linkText = "Generate")
+	WebElement GenerateLink;
+	
 	@FindBy(xpath="(//a[contains(text(),'Data')])[2]")
 	WebElement dataLink;
 	
@@ -35,6 +38,8 @@ public class HomePage extends TestBase {
 	
 	@FindBy(xpath="//a[contains(text(),'Company')]")
 	WebElement companyLink;
+	
+	
 	
 	//Initializing the page Objects
 	public HomePage() {
@@ -75,6 +80,11 @@ public class HomePage extends TestBase {
 		Actions action = new Actions(driver);
 		action.moveToElement(companySetupLink).moveToElement(companyLink).build().perform();
 		companyLink.click();
+	}
+	public void clickonGenerateLink() {
+		Actions action = new Actions(driver);
+		action.moveToElement(GenerateLink).build().perform();
+		GenerateLink.click();
 	}
 	
 }
