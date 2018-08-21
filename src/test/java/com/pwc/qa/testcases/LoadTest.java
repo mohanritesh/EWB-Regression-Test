@@ -1,5 +1,6 @@
 package com.pwc.qa.testcases;
 
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -11,6 +12,10 @@ import com.pwc.qa.util.Runner;
 import com.pwc.qa.util.TestUtil;
 
 public class LoadTest extends TestBase{
+	
+	public LoadTest() {
+		super();
+	}
 	LoginPage loginPage;
 	HomePage homePage;
 	TestUtil testUtil;
@@ -22,6 +27,7 @@ public class LoadTest extends TestBase{
 		initialization();
 		ewbPage = new EWBPage();
 		loginPage = new LoginPage();
+		runner=new Runner();
 		runner.loadTest("Login Click");
 		homePage = loginPage.login(prop.getProperty("username"), prop.getProperty("password"));
 		ewbPage = homePage.clickOnEWBLink();
@@ -37,6 +43,10 @@ public class LoadTest extends TestBase{
 		runner.loadTest("GenerateClick 2nd");
 		//adminPage.addNewCompany("CMCLL7860M", "ClaritusConsultingPan");
 		//adminPage.addNewCompany(companyPan, companyName);
+	}
+	@AfterMethod
+	public void tearDown() {
+		driver.quit();
 	}
 	
 }

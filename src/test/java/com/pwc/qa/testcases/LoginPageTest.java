@@ -44,7 +44,7 @@ public class LoginPageTest extends TestBase {
 	public void loginTest() {
 		homepage = loginpage.login(prop.getProperty("username"), prop.getProperty("password"));
 	}
-	@Test(priority=4, dataProvider="getPWCTestData")
+	@Test(priority=1, dataProvider="getPWCTestData")
 	public void validateLoginTest(String userName, String password) {
 		homepage=loginpage.login(userName, password);
 		
