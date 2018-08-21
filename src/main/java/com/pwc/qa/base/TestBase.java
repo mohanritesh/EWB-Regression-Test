@@ -19,8 +19,7 @@ public class TestBase {
 	public TestBase() {
 		try {
 		prop = new Properties();
-			FileInputStream ip = new FileInputStream("D:\\Rajneesh\\Software\\PWCAutomationTest\\src\\main\\java\\com\\pwc\\"
-					+ "qa\\config\\config.properties");
+			FileInputStream ip = new FileInputStream("D:\\PWC_Project\\EWB-Regression-Test\\src\\main\\java\\com\\pwc\\qa\\config\\config.properties");
 			prop.load(ip);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -32,7 +31,7 @@ public class TestBase {
 public static void initialization() {
 	String browserName = prop.getProperty("browser");
 	if(browserName.equals("chrome")) {
-		System.setProperty("webdriver.chrome.driver", "D:\\Rajneesh\\Software\\Selenium_Drivers\\Chrome_\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
 		driver = new ChromeDriver();
 	}
 	driver.manage().window().maximize();

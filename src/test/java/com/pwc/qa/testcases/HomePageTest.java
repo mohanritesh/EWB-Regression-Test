@@ -63,6 +63,10 @@ public class HomePageTest extends TestBase {
 	public void verifyAdminLinkTest() {
 		adminPage = homePage.clickOnAdminLink();
 	}
+	@Test(priority=7)
+	public void pageLoadtime() {
+		adminPage = homePage.clickOnAdminLink();
+	}
 	@AfterMethod
 	public void tearDown() {
 		driver.quit();

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="PWCAutomation">
+<!-- <test name="PWCTest"> -->
+   <test thread-count="0" name="Test">
+    <classes>
+      <class name="com.pwc.qa.testcases.EwbPageTest.LoginPageTest." />
+       <class name="com.pwc.qa.testcases.LoginPageTest" />
+      <class name="com.pwc.qa.testcases.HomePageTest" />
+     <!-- <class name="com.pwc.qa.testcases.DataPageTest"/>
+      <class name="com.pwc.qa.testcases.AdminPageTest"/>
+      <class name="com.pwc.qa.testcases.LoadTest"/>
+     <class name="com.pwc.qa.testcases.TransporterPageTest"/> -->
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->

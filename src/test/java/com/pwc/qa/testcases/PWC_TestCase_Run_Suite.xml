@@ -1,0 +1,26 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="PWC_Reggression" verbose="1">
+	<test name="TestCases">
+		<classes>
+			<!-- <class name="com.pwc.qa.testcases.LoginPageTest" /> -->
+			<class name="com.pwc.qa.testcases.EwbPageTest" />
+			<class name="com.pwc.qa.testcases.TransporterPageTest" />
+		</classes>
+	</test>
+
+	<test name="TestCases2">
+		<classes>
+			<!-- <class name="com.pwc.qa.testcases.AdminPageTest" /> <class name="com.pwc.qa.testcases.DataPageTest" 
+				/> <class name="com.pwc.qa.testcases.HomePageTest" /> -->
+
+
+
+		</classes>
+	</test>
+</suite>
+
+	
+
+
+
