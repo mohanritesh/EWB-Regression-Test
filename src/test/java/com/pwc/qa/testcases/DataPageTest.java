@@ -18,7 +18,7 @@ public class DataPageTest extends TestBase {
 	HomePage homePage;
 	TestUtil testUtil;
 	DataPage dataPage;
-	String sheetName = "dataUpload";
+	String sheetName = "datalist";
 	
 	public DataPageTest() {
 		super();
@@ -32,24 +32,27 @@ public class DataPageTest extends TestBase {
 		homePage = loginPage.login(prop.getProperty("username"), prop.getProperty("password"));
 		dataPage = homePage.clickOnDataLink();
 	}
-	/*
-	@Test(priority=1)
-	public void verifyDataPageLabel() {
-		Assert.assertTrue(dataPage.verifyDataPageLabel(),"Data page label missing on the page");
-	}
-	
 	@DataProvider
 	public Object[][] getPWCTestData() {
 		Object data[][] = TestUtil.getTestData(sheetName);
 		return data;
 	}
-	
-	@Test(priority=1, dataProvider="getPWCTestData")
-	*/
 	@Test(priority=1)
-	public void validateUploadDataTest() {
+	public void validateUploadDataTest() throws Exception {
 		homePage.clickOnDataUploadLink();
-		dataPage.uploadNewData("SAP");
+		Thread.sleep(2000);
+		dataPage.verifyValidationMessage("SAP");
+		Thread.sleep(2000);
+		Assert.assertTrue(true, "Please choose a file");
+	}
+	@Test(priority=2)
+	public void validateUploadFileTest(String dropdownMenu1) throws Exception {
+		homePage.clickOnDataUploadLink();
+		Thread.sleep(2000);
+		//dataPage.verifyValidationMessage(dropdownMenu1);
+		//Thread.sleep(5000);
+		dataPage.uploadFile();
+		Thread.sleep(2000);
 	}
 	@AfterMethod
 	public void tearDown() {

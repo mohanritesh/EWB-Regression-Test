@@ -50,6 +50,15 @@ public class HomePage extends TestBase {
 
 	@FindBy(xpath = "//a[contains(text(),'Company')]")
 	WebElement companyLink;
+	
+	@FindBy(xpath="(//a[contains(text(),'Business Unit')])[1]")
+	WebElement businessUnitLink;
+	
+	@FindBy(xpath="//a[contains(text(),'Sub Business Unit')]")
+	WebElement subBusinessUnitLink;
+	
+	@FindBy(xpath="(//a[contains(text(),'Location')])[1]")
+	WebElement locationLink;
 
 	@FindBy(xpath = "//*[@id=\"containerMenuDiv\"]/div[2]/div/div/ul[2]/li[1]/ul/li[7]/a/span")
 	WebElement allEwbLink;
@@ -102,6 +111,22 @@ public class HomePage extends TestBase {
 		Actions action = new Actions(driver);
 		action.moveToElement(companySetupLink).moveToElement(companyLink).build().perform();
 		companyLink.click();
+	}
+	
+	public void clickOnBusinessUnitLink() {
+		Actions action = new Actions(driver);
+		action.moveToElement(companySetupLink).moveToElement(businessUnitLink).build().perform();
+		businessUnitLink.click();
+	}
+	public void clickOnSubBusinessUnitLink() {
+		Actions action = new Actions(driver);
+		action.moveToElement(companySetupLink).moveToElement(subBusinessUnitLink).build().perform();
+		subBusinessUnitLink.click();
+	}
+	public void clickOnLocationLink() {
+		Actions action = new Actions(driver);
+		action.moveToElement(companySetupLink).moveToElement(locationLink).build().perform();
+		locationLink.click();
 	}
 
 	public void clickonGenerateLink() {
