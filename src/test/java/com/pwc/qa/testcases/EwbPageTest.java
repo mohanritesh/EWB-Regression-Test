@@ -33,7 +33,7 @@ public class EwbPageTest extends TestBase {
 
 	}
 // Generate EWB and status
-	@Test(priority = 1)
+	@Test(priority = 1,enabled = false)
 	public void GenerateEwayBill() throws InterruptedException {
 		homePage.clickonGenerateLink();
 		ewbPage.GenerateEwayBill();
@@ -42,35 +42,35 @@ public class EwbPageTest extends TestBase {
 		
 	}
 // Try to exclude with Reason
-	@Test(priority = 2)
+	@Test(priority = 2,enabled = false)
 	public void CancelExclusionWithReason() throws InterruptedException {
 		homePage.clickonGenerateLink();
 				ewbPage.CancelExclusionAfterSelectReason();
 
 	}
 	// Cancel Exclusion without reason
-	@Test(priority = 3)
+	@Test(priority = 3,enabled = false)
 	public void CancelExclusionWithoutReason() throws InterruptedException {
 		homePage.clickonGenerateLink();
 						ewbPage.CancelExclusionWithoutReason();
 
 	}
 	//Exclding and checking file status
-	@Test(priority = 4)
+	@Test(priority = 4,enabled = false)
 	public void CheckExcludedFileRetain() throws InterruptedException {
 		homePage.clickonGenerateLink();
 		ewbPage.CheckExcludedFileRetain();
 		
 	}
 	//Exclude without reason
-	@Test(priority = 5)
+	@Test(priority = 5,enabled = false)
 	public void ExclusionWithoutReason() throws InterruptedException {
 		homePage.clickonGenerateLink();
 		ewbPage.ExcludeWithoutReason();
 		
 	}
 	//Checking all records are loaded or not
-	@Test(priority=6)
+	@Test(priority=6,enabled = false)
 	public void validateAllEwbPage() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.loadAllEwbPage();
@@ -78,19 +78,19 @@ public class EwbPageTest extends TestBase {
 	
 
 	//Canceling EWB
-	@Test(priority=7)
+	@Test(priority=7,enabled=false)
 	public void cancelEwb() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.cancelEwb();
 	}
 	//Update current vehicle status
-	@Test(priority=8)
+	@Test(priority=8,enabled=false)
 	public void UpdateVehicle() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.UpdateVehicle();
 	}
 	//Check with blank values in update vehicle
-	@Test(priority=9)
+	@Test(priority=9,enabled=false)
 	public void UpdateVechBlank() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.UpdateVechBlank();
@@ -102,7 +102,7 @@ public class EwbPageTest extends TestBase {
 		ewbPage.UpdateVechInvalidValues();
 	}
 //Current vehicle status
-	@Test(priority=11)
+	@Test(priority=11,enabled=false)
 	public void UpdateMovement() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.UpdateMovement();
