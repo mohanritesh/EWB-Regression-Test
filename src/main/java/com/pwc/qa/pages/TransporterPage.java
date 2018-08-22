@@ -68,7 +68,11 @@ public class TransporterPage extends TestBase{
 		ArrayList<String> tmpList = new ArrayList<String>();
 		try {
 			System.out.println("entered2");
-			for (int i = 4; i < 5; i++) {
+			for (int i = 1; i < 21; i++) {
+				String initial_status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
+		                .getText();
+		        System.out.println(initial_status);
+		        if (initial_status.equals("Generated")) {
 				System.out.println("entered3");
 				String name = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
 				System.out.println("name");
@@ -109,10 +113,16 @@ public class TransporterPage extends TestBase{
 				System.out.println(status1);
 				TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
 				if (status1.equals("Sent For vehicle update")) {
-					for (int j = 0; j < 10; j++) {
+					for (int j = 0; j < 30; j++) {
 						//refreshButton.click();
 						driver.findElement(By.xpath(".//*[@id='refereshtable']")).click();
 						System.out.println("Count" + j);
+						 String stat2 = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
+	                                .getText();
+	                        System.out.println(stat2);
+	                    if (!stat2.equals("Sent For vehicle update")) {
+	                        break;
+	                    }
 					}
 					String status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
 							.getText();
@@ -125,7 +135,8 @@ public class TransporterPage extends TestBase{
 						System.out.println("failed");
 					}
 				}
-				// }
+				break;
+				 }
 			}
 		} catch (Exception e) {
 		}
@@ -136,7 +147,11 @@ public class TransporterPage extends TestBase{
 		String afterXpath = "]/td[3]";
 		try {
 			ArrayList<String> tmpList = new ArrayList<String>();
-			for (int i = 6; i < 7; i++) {
+			for (int i = 1; i < 21; i++) {
+				String initial_status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
+		                .getText();
+		        System.out.println(initial_status);
+		        if (initial_status.equals("Generated")) {
 				String name = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
 				System.out.println("name");
 				System.out.println(name);
@@ -182,7 +197,8 @@ public class TransporterPage extends TestBase{
 					System.out.println("failed");
 					
 				}
-				// }
+				break;
+				 }
 			}
 		} catch (Exception c) {
 		}

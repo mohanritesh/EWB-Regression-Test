@@ -368,9 +368,15 @@ public class EWBPage extends TestBase {
 		System.out.println("cancel-start");
 		String beforeXpath = "//*[@id=\"table1\"]/tbody/tr[";
 		String afterXpath = "]/td[3]";
+		
 		ArrayList<String> temp1 = new ArrayList<String>();
 		try {
-			for (int i = 2; i < 3; i++) {
+			for (int i = 1; i < 21; i++) {
+				
+				String initial_status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
+		                .getText();
+		        System.out.println(initial_status);
+		        if (initial_status.equals("Generated")) {
 				String name = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
 				System.out.println("name");
 				System.out.println(name);
@@ -388,8 +394,6 @@ public class EWBPage extends TestBase {
 				cancelSubmit.click();
 				Thread.sleep(3000);
 				driver.navigate().refresh();
-		
-				
 				temp1.add(name);
 				System.out.println("Arralist value is:" + temp1.toString());
 				Thread.sleep(30000);
@@ -398,7 +402,7 @@ public class EWBPage extends TestBase {
                             .getText();
                     System.out.println(status1);
                 if (status1.equals("Sent for cancellation")) {
-                    for (int j = 0; j < 20; j++) {
+                    for (int j = 0; j < 30; j++) {
                         refreshButton.click();
                         System.out.println("Count" + j);
                         String stat = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
@@ -420,7 +424,11 @@ public class EWBPage extends TestBase {
                     } else {
                         TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
                         System.out.println("failed");
-                    }}}}
+                    }}
+                break;
+		        }
+		       
+			}}
                 catch (Exception e) {
                 }
                 }
@@ -432,7 +440,11 @@ public class EWBPage extends TestBase {
 		String afterXpath = "]/td[3]";
 		ArrayList<String> tmpList = new ArrayList<String>();
 		try {
-			for (int i = 4; i < 5; i++) {
+			for (int i = 1; i < 20; i++) {
+				String initial_status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
+		                .getText();
+		        System.out.println(initial_status);
+		        if (initial_status.equals("Generated")) {
 				String name = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
 				System.out.println("name");
 				System.out.println(name);
@@ -455,10 +467,9 @@ public class EWBPage extends TestBase {
 				sel1.selectByValue("32");
 				Select sel2 = new Select(updateReason);
 				sel2.selectByValue("1");
+				TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
 				update_submit.click();
 				Thread.sleep(3000);
-				TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
-
 				driver.navigate().refresh();
 				System.out.println("close");
 				tmpList.add(name);
@@ -469,7 +480,7 @@ public class EWBPage extends TestBase {
 				TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
 
 				if (status1.equals("Sent For vehicle update")) {
-                    for (int j = 0; j < 10; j++) {
+                    for (int j = 0; j < 30; j++) {
                         refreshButton.click();
                         System.out.println("Count" + j);
                         
@@ -491,7 +502,8 @@ public class EWBPage extends TestBase {
                     } else {
                         System.out.println("failed");
                     }}
-				// }
+				break;
+				 }
 			}
 		} catch (Exception e) {
 		}
@@ -504,7 +516,11 @@ public class EWBPage extends TestBase {
 		String afterXpath = "]/td[3]";
 		ArrayList<String> tmpList = new ArrayList<String>();
 		try {
-			for (int i = 5; i < 6; i++) {
+			for (int i = 1; i < 20; i++) {
+				String initial_status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
+		                .getText();
+		        System.out.println(initial_status);
+		        if (initial_status.equals("Generated")) {
 				String name = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
 				System.out.println("name");
 				System.out.println(name);
@@ -521,8 +537,6 @@ public class EWBPage extends TestBase {
 				transMode.click();
 				update_submit.click();
 				Thread.sleep(3000);
-				driver.navigate().refresh();
-				Thread.sleep(3000);
 				String validation = blank_vallidation.getText();
 				System.out.println(validation);
 				TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
@@ -530,6 +544,8 @@ public class EWBPage extends TestBase {
 				if (validation.equals("Please enter place of change")) {
 					System.out.println("Validation Success");
 				}
+				break;
+			}
 			}
 		} catch (Exception e) {
 		}
@@ -541,7 +557,11 @@ public class EWBPage extends TestBase {
 		String afterXpath = "]/td[3]";
 		ArrayList<String> tmpList = new ArrayList<String>();
 		try {
-			for (int i = 11; i < 12; i++) {
+			for (int i = 1; i < 20; i++) {
+				String initial_status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
+		                .getText();
+		        System.out.println(initial_status);
+		        if (initial_status.equals("Generated")) {
 				String name = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
 				System.out.println("name");
 				System.out.println(name);
@@ -570,12 +590,8 @@ public class EWBPage extends TestBase {
 				transportation_document_date.clear();
 				transportation_document_date.click();
 				TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
-				String validation = blank_vallidation.getText();
-				Assert.assertEquals(validation,"Please enter valid data");
-
 				update_submit.click();
 				Thread.sleep(3000);
-				TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
 				driver.navigate().refresh();
 				System.out.println("close");
 				tmpList.add(name);
@@ -583,10 +599,13 @@ public class EWBPage extends TestBase {
 				Thread.sleep(3000);
 				String status1 = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]")).getText();
 				System.out.println(status1);
-				if (status1.equals("Sent For vehicle update")) {
-
-					System.out.println("failed");
+				TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+				Assert.assertEquals(status1,"Vehicle Updation Failed, Inval.....Read More...");
+				if (status1.equals("Vehicle Updation Failed, Inval.....Read More...")) {
+					System.out.println("status====success==Vehicle Updation Failed");
 				}
+				break;
+			}
 			}
 		} catch (Exception e) {
 		}
@@ -597,7 +616,11 @@ public class EWBPage extends TestBase {
 		String afterXpath = "]/td[3]";
 		try {
 			ArrayList<String> tmpList = new ArrayList<String>();
-			for (int i = 6; i < 7; i++) {
+			for (int i = 1; i < 21; i++) {
+				String initial_status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
+		                .getText();
+		        System.out.println(initial_status);
+		        if (initial_status.equals("Generated")) {
 				String name = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
 				System.out.println("name");
 				System.out.println(name);
@@ -620,18 +643,20 @@ public class EWBPage extends TestBase {
 				System.out.println("Completed update remarks");
 				tmpList.add(name);
 				System.out.println("Arralist value is:" + tmpList.toString());
-				Thread.sleep(3000);
+				Thread.sleep(5000);
+				String status_movement = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]")).getText();
+				System.out.println(status_movement);
+				JavascriptExecutor jse = (JavascriptExecutor)driver;
+				jse.executeScript("window.scrollBy(0,250)", "");
 				TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
-				String status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]")).getText();
-				System.out.println(status);
-				TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
-				Assert.assertEquals(status,"Generated");
-				if (status.equals("Generated")) {
+				Assert.assertEquals(status_movement,"Generated");
+				if (status_movement.equals("Generated")) {
 					System.out.println("status====success==Updated Movement");
 				} else {
 					System.out.println("failed");
 				}
-				// }
+			 }
+		        break;
 			}
 		} catch (Exception c) {
 		}
