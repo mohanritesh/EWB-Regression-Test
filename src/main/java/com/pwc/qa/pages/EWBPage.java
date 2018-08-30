@@ -1,5 +1,6 @@
 package com.pwc.qa.pages;
 
+import java.awt.RenderingHints.Key;
 import java.util.*;
 import java.util.ArrayList;
 import java.text.DateFormat;
@@ -12,10 +13,13 @@ import java.util.Date;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openxml4j.samples.GetThumbnails;
 import org.testng.Assert;
 
@@ -27,6 +31,9 @@ import jxl.write.DateTime;
 public class EWBPage extends TestBase {
 	@FindBy(xpath = "//img[@alt='pwc logo']")
 	WebElement pwcLogo;
+
+	@FindBy(xpath = "//*[@id=\"containerMenuDiv\"]/div[2]/div/div/ul[2]/li[1]/ul/li[7]/a/span")
+	WebElement allEwbLink;
 
 	@FindBy(id = "btnapply")
 	WebElement applyButton;
@@ -110,6 +117,9 @@ public class EWBPage extends TestBase {
 	@FindBy(id = "vehicle_no")
 	WebElement vehicle_no;
 
+	@FindBy(xpath = "(//a[contains(text(),'EWB')])[2]")
+	WebElement ewbLink;
+
 	@FindBy(id = "transportation_document_no")
 	WebElement transportation_document_no;
 
@@ -141,8 +151,11 @@ public class EWBPage extends TestBase {
 
 		String beforeXpath = "//*[@id=\"table1\"]/tbody/tr[";
 		String afterXpath = "]/td[5]";
+		ArrayList<String> tmpList = new ArrayList<String>();
 		for (int i = 1; i < 3; i++) {
-			String name = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
+			String genDocNo = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
+			tmpList.add(genDocNo);
+			System.out.println("DocNo:" + genDocNo);
 			driver.findElement(By.xpath(
 					"//*[@id='table1_wrapper']/div[4]/div[3]/div[2]/div/table/tbody/tr[" + i + "]/td[1]/input[1]"))
 					.click();
@@ -154,13 +167,75 @@ public class EWBPage extends TestBase {
 			Thread.sleep(5000);
 			String genStatus = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[9]")).getText();
 			TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+			// ArrayList<String> tmpList1 = new ArrayList<String>();
+			for (int j = 1; j < 300; j = j + 5) {
+				// String getVal = null;
+				// String name1 = driver.findElement(By.xpath(beforeXpath + j +
+				// afterXpath)).getText();
+				Thread.sleep(3000);
+				driver.navigate().refresh();
+
+				/* tmpList1.add(name1); */
+				// System.out.println(tmpList1);
+				if (!valueExist(genDocNo)) {
+					System.out.println("Successful");
+					break;
+				} else {
+					System.out.println("Initiated Status");
+				}
+
+			}
+			// =========================
+
+			ewbLink.click();
+			Actions action = new Actions(driver);
+			action.moveToElement(allEwbLink).build().perform();
+			allEwbLink.click();
+			Thread.sleep(5000);
+			WebElement ele1 = null;
+			ele1 = driver.findElement(By.xpath(".//*[@id='table1_filter']/label/input"));
+			ele1.sendKeys(genDocNo);
+			ele1.sendKeys(Keys.ENTER);
+			Thread.sleep(5000);
+			String awbDocNo = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[1]/td[6]")).getText();
+			if (awbDocNo.equals(genDocNo)) {
+				System.out.println("Successful" + awbDocNo);
+				Assert.assertEquals(genDocNo, awbDocNo);
+				break;
+			} else {
+				System.out.println("Test Failed In AWB");
+			}
+
 			driver.findElement(By.id("idlogout")).click();
 			Thread.sleep(5000);
 			driver.findElement(By.xpath("/html/body/div[5]/div/div/div[3]/button[2]")).click();
+			// driver.findElement(By.linkText("Yes")).click();
 			Thread.sleep(4000);
-			Assert.assertEquals(genStatus, "Initiated");
+			// Assert.assertEquals(genStatus, "Initiated");
+
 			break;
 		}
+	}
+
+	public boolean valueExist(String val) throws InterruptedException {
+		boolean exist = false;
+
+		// tmpList1.clear();
+		for (int j = 1; j <= 20; j++) {
+			String beforeXpath = "//*[@id=\"table1\"]/tbody/tr[";
+			String afterXpath = "]/td[5]";
+			String val1 = driver.findElement(By.xpath(beforeXpath + j + afterXpath)).getText();
+
+			if (val.equals(val1)) {
+				exist = true;
+				// System.out.println("Successful");
+				break;
+
+			}
+
+		}
+		return exist;
+
 	}
 
 	// Checking Excluded file retain or not
@@ -322,21 +397,14 @@ public class EWBPage extends TestBase {
 					Thread.sleep(3000);
 					driver.navigate().refresh();
 					temp1.add(name);
-					Thread.sleep(30000);
+
 					Thread.sleep(3000);
 					String status1 = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
 							.getText();
 					System.out.println(status1);
 					if (status1.equals("Sent for cancellation")) {
 
-						/*
-						 * long start_time = System.currentTimeMillis(); long wait_time = 300000; //5
-						 * MIN long end_time = start_time + wait_time;
-						 * 
-						 * while (System.currentTimeMillis() < end_time) {
-						 */
-
-						for (int j = 0; j < 30; j++) {
+						for (int j = 5; j < 300; j++) {
 							refreshButton.click();
 							String stat = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
 									.getText();
@@ -344,8 +412,6 @@ public class EWBPage extends TestBase {
 								break;
 							}
 						}
-						// break;
-						// }
 						String status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
 								.getText();
 						System.out.println(status);
@@ -405,7 +471,7 @@ public class EWBPage extends TestBase {
 					TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
 
 					if (status1.equals("Sent For vehicle update")) {
-						for (int j = 0; j < 30; j++) {
+						for (int j = 5; j < 300; j++) {
 							refreshButton.click();
 
 							String stat2 = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
@@ -501,7 +567,7 @@ public class EWBPage extends TestBase {
 							.getText();
 					TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
 					if (status1.equals("Sent For vehicle update")) {
-						for (int j = 0; j < 30; j++) {
+						for (int j = 5; j < 300; j++) {
 							refreshButton.click();
 
 							String stat2 = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
