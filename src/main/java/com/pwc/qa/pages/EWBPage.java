@@ -1,6 +1,14 @@
 package com.pwc.qa.pages;
 
+import java.util.*;
 import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -8,10 +16,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.openxml4j.samples.GetThumbnails;
 import org.testng.Assert;
 
 import com.pwc.qa.base.TestBase;
 import com.pwc.qa.util.TestUtil;
+
+import jxl.write.DateTime;
 
 public class EWBPage extends TestBase {
 	@FindBy(xpath = "//img[@alt='pwc logo']")
@@ -116,6 +127,12 @@ public class EWBPage extends TestBase {
 
 	@FindBy(xpath = "//*[@id=\"btnsubmitupdatemovement\"]")
 	WebElement updateMovementButton;
+
+	@FindBy(id = "txt_reject")
+	WebElement txt_reject;
+
+	@FindBy(xpath = "//*[@id=\"btnSubmitReject\"]")
+	WebElement cpReject_submit;
 
 	// Eway Bill Generation
 	public void GenerateEwayBill() throws InterruptedException {
@@ -280,7 +297,6 @@ public class EWBPage extends TestBase {
 	}
 
 	public void cancelEwb() {
-		System.out.println("cancel-start");
 		String beforeXpath = "//*[@id=\"table1\"]/tbody/tr[";
 		String afterXpath = "]/td[3]";
 
@@ -312,6 +328,14 @@ public class EWBPage extends TestBase {
 							.getText();
 					System.out.println(status1);
 					if (status1.equals("Sent for cancellation")) {
+
+						/*
+						 * long start_time = System.currentTimeMillis(); long wait_time = 300000; //5
+						 * MIN long end_time = start_time + wait_time;
+						 * 
+						 * while (System.currentTimeMillis() < end_time) {
+						 */
+
 						for (int j = 0; j < 30; j++) {
 							refreshButton.click();
 							String stat = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
@@ -320,6 +344,8 @@ public class EWBPage extends TestBase {
 								break;
 							}
 						}
+						// break;
+						// }
 						String status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
 								.getText();
 						System.out.println(status);
@@ -541,6 +567,164 @@ public class EWBPage extends TestBase {
 			}
 		} catch (Exception c) {
 		}
+	}
+
+	public void AllEwbCpReject() {
+		String beforeXpath = "//*[@id=\"table1\"]/tbody/tr[";
+		String afterXpath = "]/td[3]";
+
+		ArrayList<String> temp1 = new ArrayList<String>();
+		try {
+			for (int i = 1; i < 100; i++) {
+
+				String initial_status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
+						.getText();
+				System.out.println(initial_status);
+				if (initial_status.isEmpty()) {
+					String name = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
+					driver.findElement(By.xpath("//*[@id='table1_wrapper']/div[4]/div[3]/div[2]/div/table/tbody/tr[" + i
+							+ "]/td[1]/input[1]")).click();
+					Select sel = new Select(allEwbdropdown);
+					sel.selectByValue("reject");
+					applyButtonX.click();
+					Thread.sleep(3000);
+					txt_reject.clear();
+					txt_reject.sendKeys("rejected");
+					cpReject_submit.click();
+					Thread.sleep(3000);
+					driver.navigate().refresh();
+					temp1.add(name);
+					Thread.sleep(30000);
+					String status1 = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[1]/td[8]")).getText();
+					System.out.println(status1);
+					if (status1.equals("Sent for rejection")) {
+						for (int j = 0; j < 60; j++) {
+							refreshButton.click();
+							String stat = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[1]/td[8]"))
+									.getText();
+							System.out.println("count" + j);
+							if (!stat.equals("Sent for rejection")) {
+								break;
+							}
+						}
+						String status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[1]/td[8]")).getText();
+						System.out.println(status);
+						TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+						Assert.assertEquals(status, "Rejected");
+						if (status.equals("Rejected")) {
+							TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+						} else {
+							TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+						}
+					} else {
+						String status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[1]/td[8]")).getText();
+						System.out.println(status);
+						TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+						Assert.assertEquals(status, "Rejected");
+					}
+					break;
+				}
+
+			}
+		} catch (Exception e) {
+		}
+	}
+
+	public void AllEwbCpAccept() {
+		String beforeXpath = "//*[@id=\"table1\"]/tbody/tr[";
+		String afterXpath = "]/td[3]";
+
+		ArrayList<String> temp1 = new ArrayList<String>();
+		try {
+			for (int i = 1; i < 100; i++) {
+
+				String initial_status = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[8]"))
+						.getText();
+				System.out.println(initial_status);
+				if (initial_status.isEmpty()) {
+					String name = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
+					driver.findElement(By.xpath("//*[@id='table1_wrapper']/div[4]/div[3]/div[2]/div/table/tbody/tr[" + i
+							+ "]/td[1]/input[1]")).click();
+					Select sel = new Select(allEwbdropdown);
+					sel.selectByValue("accept");
+					applyButtonX.click();
+					Thread.sleep(3000);
+					txt_reject.clear();
+					txt_reject.sendKeys("accepted");
+					cpReject_submit.click();
+					Thread.sleep(3000);
+					driver.navigate().refresh();
+					temp1.add(name);
+					Thread.sleep(30000);
+					Thread.sleep(3000);
+					String status1 = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[1]/td[8]")).getText();
+					System.out.println(status1);
+					TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+					Assert.assertEquals(status1, "Accepted");
+					break;
+				}
+
+			}
+		} catch (Exception e) {
+		}
+	}
+
+	public void CancelList() throws InterruptedException, ParseException {
+		Thread.sleep(10000);
+
+		// To locate table.
+		WebElement mytable = driver
+				.findElement(By.xpath(".//*[@id='table1_wrapper']/div[4]/div[3]/div[2]/div/table/tbody"));
+		// To locate rows of table.
+		List<WebElement> rows_table = mytable.findElements(By.tagName("tr"));
+		// To calculate no of rows In table.
+		int rows_count = rows_table.size();
+		System.out.println("ROW COUNT : " + rows_count);
+
+		String beforeXpath = "//*[@id=\"table1\"]/tbody/tr[";
+		String afterXpath = "]/td[4]";
+		ArrayList<String> tmpList = new ArrayList<String>();
+		for (int i = 1; i < rows_count; i++) {
+			String date1 = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
+			System.out.println(date1);
+
+			// Create object of SimpleDateFormat class and decide the format
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+
+			// get current date time with Date()
+			Date date = new Date();
+
+			// Now format the date
+			String date2 = dateFormat.format(date);
+
+			// Print the Date
+			System.out.println("Current date and time is " + date2);
+
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+
+			Date d1 = null;
+			Date d2 = null;
+
+			d1 = format.parse(date1);
+			d2 = format.parse(date2);
+
+			// in milliseconds
+			long diff = d2.getTime() - d1.getTime();
+			// System.out.print(diff + " diff ");
+			double hours;
+			double minutes;
+			double seconds;
+			seconds = diff / 1000;
+			hours = seconds / (60 * 60);
+			// minutes = seconds % ((60*60));
+			System.out.print(hours + " hours ");
+			if (hours < 24) {
+				System.out.print(" Success ");
+				Assert.assertTrue(true);
+			}
+
+		}
+
 	}
 
 }
