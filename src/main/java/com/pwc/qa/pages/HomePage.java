@@ -62,7 +62,14 @@ public class HomePage extends TestBase {
 
 	@FindBy(xpath = "//*[@id=\"containerMenuDiv\"]/div[2]/div/div/ul[2]/li[1]/ul/li[7]/a/span")
 	WebElement allEwbLink;
-
+	
+	@FindBy(xpath = "/html/body/header/div/div[3]/div[2]/div/div/ul[2]/li[1]/ul/li[10]/a/span")
+	WebElement allEwbCpLink;
+	
+	@FindBy(xpath = "/html/body/header/div/div[3]/div[2]/div/div/ul[2]/li[1]/ul/li[3]/a")
+	WebElement cancel;
+	
+	
 	// Initializing the page Objects
 	public HomePage() {
 		PageFactory.initElements(driver, this);
@@ -139,6 +146,18 @@ public class HomePage extends TestBase {
 		Actions action = new Actions(driver);
 		action.moveToElement(allEwbLink).build().perform();
 		allEwbLink.click();
+	}
+	
+	public void clickOnAllEWBCPLink() {
+		Actions action = new Actions(driver);
+		action.moveToElement(allEwbCpLink).build().perform();
+		allEwbCpLink.click();
+	}
+	
+	public void clickOnCancelLink() {
+		Actions action = new Actions(driver);
+		action.moveToElement(cancel).build().perform();
+		cancel.click();
 	}
 
 	public void clickOnLogout() {
