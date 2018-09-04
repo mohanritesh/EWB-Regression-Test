@@ -25,7 +25,7 @@ public class TestUtil extends TestBase {
 	public static long IMPLICIT_WAIT = 20;
 	
 	
-	public static String TESTDATA_SHEET_PATH = "D:\\EWB2018TestDemo\\src\\main\\java\\com\\pwc\\qa\\testdata\\PwCTestData.xlsx";
+	public static String TESTDATA_SHEET_PATH = "D:\\IVL\\EWB-Regression-Test\\src\\main\\java\\com\\pwc\\qa\\testdata\\PwCTestData.xlsx";
 	//public static String TESTDATA_SHEET_PATH = "D:\\PWC_Project\\EWB-Regression-Test\\src\\main\\java\\com\\pwc\\qa\\testdata\\PwCTestData.xlsx";
 	public static String PROJECT_NAME = "PWCAutomationTest";
 	public static boolean TAKE_SCREENSHOT = true;

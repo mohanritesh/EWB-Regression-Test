@@ -1,5 +1,7 @@
 package com.pwc.qa.pages;
 
+import static org.testng.Assert.fail;
+
 import java.awt.RenderingHints.Key;
 import java.util.*;
 import java.util.ArrayList;
@@ -26,11 +28,35 @@ import org.testng.Assert;
 import com.pwc.qa.base.TestBase;
 import com.pwc.qa.util.TestUtil;
 
-import jxl.write.DateTime;
+/*import jxl.write.DateTime;*/
 
 public class EWBPage extends TestBase {
 	@FindBy(xpath = "//img[@alt='pwc logo']")
 	WebElement pwcLogo;
+
+	@FindBy(xpath = ".//*[@id='containerMenuDiv']/div[2]/div/div/ul[2]/li[1]/a")
+	WebElement EWBClick;
+
+	@FindBy(xpath = ".//*[@id='lnkcancel']")
+	WebElement CancelLink;
+
+	@FindBy(xpath = ".//*[@id='Allcheckdoc']")
+	WebElement DocDetailsPopupCheckbox;
+
+	@FindBy(xpath = ".//*[@id='selectItemLevelReason']")
+	WebElement DocDetailsPopupReason;
+
+	@FindBy(xpath = ".//*[@id='txtItemLevelRemarks']")
+	WebElement DocDetailsPopupRemarks;
+
+	@FindBy(xpath = ".//*[@id='btnexcludedocno']")
+	WebElement DocDetailsPopupExcludebtn;
+
+	@FindBy(xpath = "html/body/div[6]/div/div/div[3]/button[2]")
+	WebElement DocDetailsPopupExcludConfirm;
+
+	@FindBy(xpath = ".//*[@id='lnkUpdateMovement']/span")
+	WebElement rejectLink;
 
 	@FindBy(xpath = "//*[@id=\"containerMenuDiv\"]/div[2]/div/div/ul[2]/li[1]/ul/li[7]/a/span")
 	WebElement allEwbLink;
@@ -168,7 +194,7 @@ public class EWBPage extends TestBase {
 			String genStatus = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[9]")).getText();
 			TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
 			// ArrayList<String> tmpList1 = new ArrayList<String>();
-			for (int j = 1; j < 300; j = j + 5) {
+			for (int j = 1; j < 300; j = j + 20) {
 				// String getVal = null;
 				// String name1 = driver.findElement(By.xpath(beforeXpath + j +
 				// afterXpath)).getText();
@@ -182,8 +208,11 @@ public class EWBPage extends TestBase {
 					break;
 				} else {
 					System.out.println("Initiated Status");
+					if(j>270) {
+						Assert.fail();
+					}
 				}
-
+				
 			}
 			// =========================
 
@@ -793,4 +822,144 @@ public class EWBPage extends TestBase {
 
 	}
 
+	public void rejectlListDateTime() {
+		try {
+			Thread.sleep(10000);
+			System.out.println("Test1");
+
+			Thread.sleep(10000);
+			System.out.println("Test2");
+			WebElement mytable = driver
+					.findElement(By.xpath(".//*[@id='table1_wrapper']/div[4]/div[3]/div[2]/div/table/tbody"));
+			// To locate rows of table.
+			List<WebElement> rows_table = mytable.findElements(By.tagName("tr"));
+			// To calculate no of rows In table.
+			int rows_count = rows_table.size();
+			System.out.println("ROW COUNT : " + rows_count);
+
+			String beforeXpath = "//*[@id=\"table1\"]/tbody/tr[";
+			String afterXpath = "]/td[3]";
+			ArrayList<String> tmpList = new ArrayList<String>();
+			for (int i = 1; i <= rows_count; i++) {
+				String date1 = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
+				System.out.println(date1);
+
+				// Create object of SimpleDateFormat class and decide the format
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a");
+
+				// get current date time with Date()
+				Date date = new Date();
+
+				// Now format the date
+				String date2 = dateFormat.format(date);
+
+				// Print the Date
+				System.out.println("Current date and time is " + date2);
+
+				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a");
+
+				Date d1 = null;
+				Date d2 = null;
+
+				d1 = format.parse(date1);
+				d2 = format.parse(date2);
+
+				// in milliseconds
+				long diff = d2.getTime() - d1.getTime();
+				// System.out.print(diff + " diff ");
+				double hours;
+				double minutes;
+				double seconds;
+				seconds = diff / 1000;
+				hours = seconds / (60 * 60);
+
+				System.out.print(hours + " hours ");
+
+				Assert.assertTrue(hours < 36);
+
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+
+	public void generateRecordsCount() {
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+
+		try {
+			Thread.sleep(10000);
+
+			String text_data = text.getText();
+
+			jse.executeScript("window.scrollBy(0,250)", "");
+			TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+			System.out.println(text_data);
+			Assert.assertTrue(text_data.contains("Total"));
+		} catch (Exception e) {
+			System.out.println("Caught Exception");
+			jse.executeScript("window.scrollBy(0,250)", "");
+			TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+			Assert.fail();
+		}
+	}
+
+	public void popupDetailsExclude() throws InterruptedException {
+		Thread.sleep(5000);
+		WebElement ele = null;
+
+		try {
+			String beforeXpath = "//*[@id=\"table1\"]/tbody/tr[";
+			String afterXpath = "]/td[5]";
+			for (int i = 4; i < 5; i++) {
+				ele = driver.findElement(By.xpath(beforeXpath + i + afterXpath));
+
+				String docno = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
+				ele.click();
+				Thread.sleep(5000);
+				DocDetailsPopupCheckbox.click();
+				Select sel = new Select(DocDetailsPopupReason);
+				sel.selectByIndex(4);
+				Thread.sleep(2000);
+				DocDetailsPopupRemarks.sendKeys("Exclusion Test");
+				DocDetailsPopupExcludebtn.click();
+				Thread.sleep(5000);
+				DocDetailsPopupExcludConfirm.click();
+				Thread.sleep(3000);
+				ewbLink.click();
+				CancelLink.click();
+				Thread.sleep(5000);
+				/*
+				 * boolean exist = false; for (int j = 1; j <= 20; j++) { String beforeXpath1 =
+				 * "//*[@id=\"table1\"]/tbody/tr["; String afterXpath1 = "]/td[6]"; String val1
+				 * = driver.findElement(By.xpath(beforeXpath1 + j + afterXpath1)).getText();
+				 * System.out.println(val1); if (docno.equals(val1)) { exist = true;
+				 * Assert.assertTrue(exist); // System.out.println("Successful"); break;
+				 * 
+				 * }
+				 * 
+				 * }
+				 */
+				ArrayList<String> tmpList1 = new ArrayList<String>();
+				for (int j = 1; j < 10; j++) {
+					String beforeXpath1 = "//*[@id=\"table1\"]/tbody/tr[";
+					String afterXpath1 = "]/td[6]";
+					String docNo1 = driver.findElement(By.xpath(beforeXpath1 + j + afterXpath1)).getText();
+					tmpList1.add(docNo1);
+					System.out.println("CancelDoc:" + docNo1);
+				}
+				Assert.assertTrue(tmpList1.contains(docno));
+				System.out.println("GenerateDoc:" + docno);
+				driver.navigate().refresh();
+				Thread.sleep(5000);
+				TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+
+				// checkBoxInput.click();
+
+				Thread.sleep(5000);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }

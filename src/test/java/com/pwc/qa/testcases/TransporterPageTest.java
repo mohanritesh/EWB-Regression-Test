@@ -34,12 +34,12 @@ public class TransporterPageTest extends TestBase{
 		
 	}
 
-	@Test(priority=12)
+	@Test(priority=21)
 	public void UpdateVehicleTransporter() {
 		System.out.println("initial");
 		transporterpage.UpdateVehicleTransporter();
 	}
-	@Test(priority=13)
+	@Test(priority=22)
 	public void UpdateMovementTransporter() {
 		System.out.println("initial");
 		transporterpage.UpdateMovementTransporter();

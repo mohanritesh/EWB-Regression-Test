@@ -15,6 +15,9 @@ public class HomePage extends TestBase {
 	@FindBy(id = "idlogout")
 	WebElement logOut;
 
+	@FindBy(xpath = ".//*[@id='lnkReject']")
+	WebElement rejectLink;
+	
 	@FindBy(xpath = "/html/body/div[5]/div/div/div[3]/button[2]")
 	WebElement logoutYes;
 	
@@ -159,7 +162,12 @@ public class HomePage extends TestBase {
 		action.moveToElement(cancel).build().perform();
 		cancel.click();
 	}
-
+	public void clickOnRejectLink() {
+		Actions action = new Actions(driver);
+		action.moveToElement(rejectLink).build().perform();
+		rejectLink.click();
+		
+	}
 	public void clickOnLogout() {
 		//Actions action = new Actions(driver);
 		logOut.click();

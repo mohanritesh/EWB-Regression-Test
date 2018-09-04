@@ -35,8 +35,8 @@ public class EwbPageTest extends TestBase {
 
 	}
 
-	// Generate EWB and status
-	@Test(priority = 1, enabled = false)
+	// Generate EWB and status[]
+	@Test(priority = 5,enabled=false)
 	public void GenerateEwayBill() throws InterruptedException {
 		homePage.clickonGenerateLink();
 		ewbPage.GenerateEwayBill();
@@ -46,7 +46,7 @@ public class EwbPageTest extends TestBase {
 	}
 
 	// Try to exclude with Reason
-	@Test(priority = 2, enabled = false)
+	@Test(priority = 6)
 	public void CancelExclusionWithReason() throws InterruptedException {
 		homePage.clickonGenerateLink();
 		ewbPage.CancelExclusionAfterSelectReason();
@@ -54,7 +54,7 @@ public class EwbPageTest extends TestBase {
 	}
 
 	// Cancel Exclusion without reason
-	@Test(priority = 3, enabled = false)
+	@Test(priority = 7,enabled=false)
 	public void CancelExclusionWithoutReason() throws InterruptedException {
 		homePage.clickonGenerateLink();
 		ewbPage.CancelExclusionWithoutReason();
@@ -62,7 +62,7 @@ public class EwbPageTest extends TestBase {
 	}
 
 	// Exclding and checking file status
-	@Test(priority = 4, enabled = false)
+	@Test(priority = 8)
 	public void CheckExcludedFileRetain() throws InterruptedException {
 		homePage.clickonGenerateLink();
 		ewbPage.CheckExcludedFileRetain();
@@ -70,7 +70,7 @@ public class EwbPageTest extends TestBase {
 	}
 
 	// Exclude without reason
-	@Test(priority = 5, enabled = false)
+	@Test(priority = 9)
 	public void ExclusionWithoutReason() throws InterruptedException {
 		homePage.clickonGenerateLink();
 		ewbPage.ExcludeWithoutReason();
@@ -78,67 +78,84 @@ public class EwbPageTest extends TestBase {
 	}
 
 	// Checking all records are loaded or not
-	@Test(priority = 6, enabled = false)
+	@Test(priority = 10)
 	public void validateAllEwbPage() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.loadAllEwbPage();
 	}
 
 	// Canceling EWB
-	@Test(priority = 7, enabled = false)
+	@Test(priority = 11)
 	public void cancelEwb() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.cancelEwb();
 	}
 
 	// Update current vehicle status
-	@Test(priority = 8, enabled = false)
+	@Test(priority = 12)
 	public void UpdateVehicle() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.UpdateVehicle();
 	}
 
 	// Check with blank values in update vehicle
-	@Test(priority = 9, enabled = false)
+	@Test(priority = 13)
 	public void UpdateVechBlank() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.UpdateVechBlank();
 	}
 
 	// Check with invalid values in update vehicle
-	@Test(priority = 10, enabled = false)
+	@Test(priority = 14)
 	public void UpdateVechInvalidValues() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.UpdateVechInvalidValues();
 	}
 
 	// Current vehicle status
-	@Test(priority = 11, enabled = false)
+	@Test(priority = 15)
 	public void UpdateMovement() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.UpdateMovement();
 	}
 
 	// All EWB CP Reject
-	@Test(priority = 12, enabled = false)
+	@Test(priority = 16)
 	public void AllEwbCpReject() {
 		homePage.clickOnAllEWBCPLink();
 		ewbPage.AllEwbCpReject();
 	}
 
 	// All EWB CP Accept
-	@Test(priority = 13, enabled = false)
+	@Test(priority = 17)
 	public void AllEwbCpAccept() {
 		homePage.clickOnAllEWBCPLink();
 		ewbPage.AllEwbCpAccept();
 	}
 
 	// Cancel List 
-	@Test(priority = 14)
+	@Test(priority = 18)
 	public void CancelList() throws InterruptedException, ParseException {
 		homePage.clickOnCancelLink();
 		ewbPage.CancelList();
 	}
+	@Test(priority = 19)
+	public void RejectListStatus() throws InterruptedException, ParseException {
+		homePage.clickOnRejectLink();
+		ewbPage.rejectlListDateTime();
+	}
+	@Test(priority = 20)
+	public void validateGenerateRecordscount() {
+		homePage.clickonGenerateLink();
+		ewbPage.generateRecordsCount();
+	}
+	
+	@Test(priority = 21)
+	public void excludeFromDocDetailsPopup() throws InterruptedException {
+		homePage.clickonGenerateLink();
+		ewbPage.popupDetailsExclude();
+	}
+	
 
 	@AfterMethod
 	public void tearDown() {
