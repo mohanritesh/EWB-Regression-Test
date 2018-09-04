@@ -77,69 +77,94 @@ public class EwbPageTest extends TestBase {
 
 	}
 
-	// Checking all records are loaded or not
+	// All EWB_01 : Checking all records are loaded or not
 	@Test(priority = 6, enabled = false)
-	public void validateAllEwbPage() {
+	public void validateAllEwbPage() throws InterruptedException {
 		homePage.clickOnAllEWBLink();
 		ewbPage.loadAllEwbPage();
 	}
 
-	// Canceling EWB
+	// All EWB_07 : Updation of NIC status based on the changes made in  Cancel  page
 	@Test(priority = 7, enabled = false)
 	public void cancelEwb() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.cancelEwb();
 	}
 
-	// Update current vehicle status
+	// All EWB_06 : Updation of NIC status based on the changes made in Update vehicle page
 	@Test(priority = 8, enabled = false)
 	public void UpdateVehicle() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.UpdateVehicle();
 	}
 
-	// Check with blank values in update vehicle
+	// Update vehicle_03 : Try to update vehicle with blank values.
 	@Test(priority = 9, enabled = false)
 	public void UpdateVechBlank() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.UpdateVechBlank();
 	}
 
-	// Check with invalid values in update vehicle
+	// Update vehicle_02 : Try to update vehicle with invalid values in the fields.
 	@Test(priority = 10, enabled = false)
 	public void UpdateVechInvalidValues() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.UpdateVechInvalidValues();
 	}
 
-	// Current vehicle status
+	// All EWB_08 : Updation of NIC status based on the changes made in Update movement page
 	@Test(priority = 11, enabled = false)
 	public void UpdateMovement() {
 		homePage.clickOnAllEWBLink();
 		ewbPage.UpdateMovement();
 	}
 
-	// All EWB CP Reject
+	// ALL_EWB_CP_03 : Reject  by  Counterparty
 	@Test(priority = 12, enabled = false)
 	public void AllEwbCpReject() {
 		homePage.clickOnAllEWBCPLink();
 		ewbPage.AllEwbCpReject();
 	}
 
-	// All EWB CP Accept
+	// ALL_EWB_CP_04 : Accept by Counterparty
 	@Test(priority = 13, enabled = false)
 	public void AllEwbCpAccept() {
 		homePage.clickOnAllEWBCPLink();
 		ewbPage.AllEwbCpAccept();
 	}
 
-	// Cancel List 
+	/* Cancel_01 : Data population in the grid when the Cancel page is opened.
+		(eway bill that are generated with in 24 hrs)*/
 	@Test(priority = 14)
 	public void CancelList() throws InterruptedException, ParseException {
 		homePage.clickOnCancelLink();
 		ewbPage.CancelList();
 	}
-
+	// Generate_06 : Try to edit with invalid values(transporter id) in the fields.
+	@Test(priority = 15, enabled = false)
+	public void GenerateEditInvalidTransporterId() throws InterruptedException {
+		homePage.clickonGenerateLink();
+		ewbPage.GenerateEditInvalidTransporterId();
+	}
+	// Generate_07 : Try to edit with blank values in the Transporter ID & Vehicle number
+	@Test(priority = 16, enabled = false)
+	public void GenerateEditBlankTransIdVechNo() throws InterruptedException {
+		homePage.clickonGenerateLink();
+		ewbPage.GenerateEditBlankTransIdVechNo();
+	}
+	// Generate_09 : Try to cancel editing without making any changes in the fields.
+	@Test(priority = 17, enabled = false)
+	public void GenerateEditCancel() throws InterruptedException {
+		homePage.clickonGenerateLink();
+		ewbPage.GenerateEditCancel();
+	}
+	// Generate_11 : Try to edit/update entries with existing data.
+	@Test(priority = 18, enabled = false)
+	public void GenerateEditSubmitExistingData() throws InterruptedException {
+		homePage.clickonGenerateLink();
+		ewbPage.GenerateEditSubmitExistingData();
+	}
+		
 	@AfterMethod
 	public void tearDown() {
 		driver.quit();

@@ -22,14 +22,18 @@ import org.testng.Assert;
 import com.pwc.qa.base.TestBase;
 import com.pwc.qa.util.TestUtil;
 
-import jxl.write.DateTime;
-
 public class EWBPage extends TestBase {
 	@FindBy(xpath = "//img[@alt='pwc logo']")
 	WebElement pwcLogo;
 
 	@FindBy(id = "btnapply")
 	WebElement applyButton;
+
+	@FindBy(id = "ideditexit")
+	WebElement exit;
+
+	@FindBy(id = "transporter_id")
+	WebElement transporter_id;
 
 	@FindBy(xpath = "//*[@id=\\\"table1\\\"]/tbody/tr[")
 	WebElement beforeXpath;
@@ -104,8 +108,17 @@ public class EWBPage extends TestBase {
 	@FindBy(xpath = "//*[@id=\"btnVehicleUpdateSubmit\"]")
 	WebElement update_submit;
 
+	@FindBy(id = "btnEditSubmit")
+	WebElement btnEditSubmit;
+
 	@FindBy(xpath = "//*[@id=\"span_from_place\"]")
-	WebElement blank_vallidation;
+	WebElement blank_validation;
+
+	@FindBy(id = "idspantransporter_id")
+	WebElement trans_id_validation;
+
+	@FindBy(id = "idspanvehicle_no")
+	WebElement idspanvehicle_no;
 
 	@FindBy(id = "vehicle_no")
 	WebElement vehicle_no;
@@ -449,7 +462,7 @@ public class EWBPage extends TestBase {
 					transMode.click();
 					update_submit.click();
 					Thread.sleep(3000);
-					String validation = blank_vallidation.getText();
+					String validation = blank_validation.getText();
 					TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
 					Assert.assertEquals(validation, "Please enter place of change");
 					break;
@@ -683,13 +696,16 @@ public class EWBPage extends TestBase {
 
 		String beforeXpath = "//*[@id=\"table1\"]/tbody/tr[";
 		String afterXpath = "]/td[4]";
+		JavascriptExecutor jse = (JavascriptExecutor) driver;
+		jse.executeScript("window.scrollBy(0,250)", "");
+		TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
 		ArrayList<String> tmpList = new ArrayList<String>();
-		for (int i = 1; i < rows_count; i++) {
+		for (int i = 1; i <= rows_count; i++) {
 			String date1 = driver.findElement(By.xpath(beforeXpath + i + afterXpath)).getText();
 			System.out.println(date1);
 
 			// Create object of SimpleDateFormat class and decide the format
-			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+			DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a");
 
 			// get current date time with Date()
 			Date date = new Date();
@@ -700,7 +716,7 @@ public class EWBPage extends TestBase {
 			// Print the Date
 			System.out.println("Current date and time is " + date2);
 
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss a");
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss a");
 
 			Date d1 = null;
 			Date d2 = null;
@@ -718,13 +734,96 @@ public class EWBPage extends TestBase {
 			hours = seconds / (60 * 60);
 			// minutes = seconds % ((60*60));
 			System.out.print(hours + " hours ");
-			if (hours < 24) {
-				System.out.print(" Success ");
-				Assert.assertTrue(true);
-			}
+			Assert.assertTrue(hours <= 24);
 
 		}
 
+	}
+
+	public void GenerateEditInvalidTransporterId() throws InterruptedException {
+
+		for (int i = 1; i < 3; i++) {
+			driver.findElement(By.xpath(
+					"//*[@id='table1_wrapper']/div[4]/div[3]/div[2]/div/table/tbody/tr[" + i + "]/td[1]/input[1]"))
+					.click();
+			Select selectDropdown = new Select(driver.findElement(By.xpath(".//*[@id='ddlOperation']")));
+			selectDropdown.selectByIndex(2);
+			driver.findElement(By.xpath(".//*[@id='btnapply']")).click();
+			transporter_id.clear();
+			transporter_id.sendKeys("123456");
+			btnEditSubmit.click();
+			Thread.sleep(3000);
+			String validation = trans_id_validation.getText();
+			TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+			Assert.assertEquals(validation, "Enter a valid Transporter ID");
+			break;
+		}
+	}
+
+	public void GenerateEditBlankTransIdVechNo() throws InterruptedException {
+		Thread.sleep(3000);
+		for (int i = 1; i < 100; i++) {
+			String trans_mode = driver.findElement(By.xpath(".//*[@id='table1']/tbody/tr[" + i + "]/td[34]"))
+					.getText();
+			if (trans_mode.equals("Road")) {
+			driver.findElement(By.xpath(
+					"//*[@id='table1_wrapper']/div[4]/div[3]/div[2]/div/table/tbody/tr[" + i + "]/td[1]/input[1]"))
+					.click();
+			Select selectDropdown = new Select(driver.findElement(By.xpath(".//*[@id='ddlOperation']")));
+			selectDropdown.selectByIndex(2);
+			driver.findElement(By.xpath(".//*[@id='btnapply']")).click();
+			Thread.sleep(3000);
+			transporter_id.clear();
+			vehicle_no.clear();
+			Thread.sleep(3000);
+			btnEditSubmit.click();
+			Thread.sleep(3000);
+			String validation = idspanvehicle_no.getText();
+			Thread.sleep(3000);
+			TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+			Assert.assertEquals(validation, "Enter a valid Vehicle No");
+			break;
+			}
+			
+		}
+	}
+
+	public void GenerateEditCancel() throws InterruptedException {
+		Thread.sleep(3000);
+		for (int i = 1; i < 3; i++) {
+			driver.findElement(By.xpath(
+					"//*[@id='table1_wrapper']/div[4]/div[3]/div[2]/div/table/tbody/tr[" + i + "]/td[1]/input[1]"))
+					.click();
+			Select selectDropdown = new Select(driver.findElement(By.xpath(".//*[@id='ddlOperation']")));
+			selectDropdown.selectByIndex(2);
+			driver.findElement(By.xpath(".//*[@id='btnapply']")).click();
+			Thread.sleep(5000);
+			TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+			exit.click();
+			Thread.sleep(3000);
+			String actualTitle = driver.getTitle();
+			TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+			Assert.assertEquals(actualTitle, "Generate");
+			break;
+		}
+	}
+
+	public void GenerateEditSubmitExistingData() throws InterruptedException {
+		Thread.sleep(3000);
+		for (int i = 1; i < 3; i++) {
+			driver.findElement(By.xpath(
+					"//*[@id='table1_wrapper']/div[4]/div[3]/div[2]/div/table/tbody/tr[" + i + "]/td[1]/input[1]"))
+					.click();
+			Select selectDropdown = new Select(driver.findElement(By.xpath(".//*[@id='ddlOperation']")));
+			selectDropdown.selectByIndex(2);
+			driver.findElement(By.xpath(".//*[@id='btnapply']")).click();
+			btnEditSubmit.click();
+			Thread.sleep(5000);
+			String message = poupupText.getText();
+			TestUtil.takeScreenshot(driver, TestUtil.PROJECT_NAME);
+			Assert.assertEquals(message, "Document updated successfully");
+			break;
+		}
 	}
 
 }
