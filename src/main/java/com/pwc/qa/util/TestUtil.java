@@ -24,7 +24,9 @@ public class TestUtil extends TestBase {
 	public static long PAGE_LOAD_TIMEOUT = 30;
 	public static long IMPLICIT_WAIT = 20;
 	
-	public static String TESTDATA_SHEET_PATH = "D:\\PWC_Project\\EWB-Regression-Test\\src\\main\\java\\com\\pwc\\qa\\testdata\\PwCTestData.xlsx";
+	
+	public static String TESTDATA_SHEET_PATH = "D:\\EWB2018TestDemo\\src\\main\\java\\com\\pwc\\qa\\testdata\\PwCTestData.xlsx";
+	//public static String TESTDATA_SHEET_PATH = "D:\\PWC_Project\\EWB-Regression-Test\\src\\main\\java\\com\\pwc\\qa\\testdata\\PwCTestData.xlsx";
 	public static String PROJECT_NAME = "PWCAutomationTest";
 	public static boolean TAKE_SCREENSHOT = true;
 	public static boolean SLOW_DOWN = true;
@@ -81,7 +83,7 @@ if(TAKE_SCREENSHOT) {
 				FileUtils.copyFile(source, new File(screenShotPath));
 				screenShotPath = screenShotPath.substring(screenShotPath.indexOf("\\"));
 				String log = new File("screenshot").getAbsolutePath();
-//				Reporter.log("<br/>" + "<img width='55%' src=" + srcForDisplay + " />" + "<br/>ScreenShot saved in: " + log);
+        //Reporter.log("<br/>" + "<img width='55%' src=" + srcForDisplay + " />" + "<br/>ScreenShot saved in: " + log);
 				//Reporter.log("" + "<img width='800px' src=" + srcForDisplay + " />");
 				System.out.println("Screen Captured Successfully!");
 			}

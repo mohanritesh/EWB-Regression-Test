@@ -49,8 +49,6 @@ public class LoginPageTest extends TestBase {
 		homepage=loginpage.login(userName, password);
 		
 	}
-	
-	
 	@AfterMethod
 	public void tearDown() {
 		driver.quit();
