@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="PwC Automation Test Suite">
+
+<listeners>
+     <listener class-name="com.pwc.qa.ExtentReportListener.ExtentReporterNG" />
+</listeners>
+
   <test name="PwC Application Test Cases">
     <classes>
-      <class name="com.pwc.qa.testcases.LoginPageTest"/>
-      <class name="com.pwc.qa.testcases.HomePageTest"/>
-      <class name="com.pwc.qa.testcases.DataPageTest"/>
+      
+    <class name="com.pwc.qa.testcases.AdminPageTest"/>  
+     
+      
+      
+      
+      
     </classes>
+    
   </test>
 </suite>
