@@ -1,14 +1,10 @@
 package com.pwc.qa.pages;
 
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.pwc.qa.base.TestBase;
-import com.pwc.qa.util.TestUtil;
 
 public class HomePage extends TestBase {
 
@@ -35,6 +31,9 @@ public class HomePage extends TestBase {
 
 	@FindBy(xpath = "(//li[2]/ul/li/a/span)[1]")
 	WebElement dataUploadLink;
+	
+	@FindBy(xpath="(//li[2]/ul/li/a/span)[2]")
+	WebElement dataDownloadLink;
 
 	@FindBy(xpath = "(//a[contains(text(),'Report')])[2]")
 	WebElement reportLink;
@@ -44,7 +43,28 @@ public class HomePage extends TestBase {
 
 	@FindBy(xpath = "(//a[contains(text(),'Admin')])[2]")
 	WebElement adminLink;
+	
+	//////////////////
+	@FindBy(linkText = "Master Data")
+	WebElement masterDataLink;
+	
+	@FindBy(xpath = "(//a[contains(text(),'Customer Master')])[1]")
+	WebElement customerMasterLink;
+	
+	@FindBy(xpath="(//a[contains(text(),'Supplier Master')])[1]")
+	WebElement supplierMasterLink;
+	
+	@FindBy(xpath="(//a[contains(text(),'Product Master')])[1]")
+	WebElement productMasterLink;
+	
+	@FindBy(xpath="(//a[contains(text(),'Transporter Master')])[1]")
+	WebElement transporterMasterLink;
+	
+	@FindBy(xpath="(//a[contains(text(),'Logistics Master')])[1]")
+	WebElement logisticsMasterLink;
 
+	
+	////////////
 	@FindBy(linkText = "Company Setup")
 	WebElement companySetupLink;
 
@@ -62,6 +82,16 @@ public class HomePage extends TestBase {
 
 	@FindBy(xpath = "//*[@id=\"containerMenuDiv\"]/div[2]/div/div/ul[2]/li[1]/ul/li[7]/a/span")
 	WebElement allEwbLink;
+	
+	@FindBy(xpath="(//a[contains(text(),'GSTIN')])[1]")
+	WebElement gstnLink;
+	
+	@FindBy(id="lnkuser")
+	WebElement userLink;
+	
+	@FindBy(id="lnkassignrole")
+	WebElement assignRoleLink;
+	
 
 	// Initializing the page Objects
 	public HomePage() {
@@ -106,6 +136,12 @@ public class HomePage extends TestBase {
 		action.moveToElement(dataLink).build().perform();
 		dataUploadLink.click();
 	}
+	
+	public void clickOnDataDownloadLink() {
+		Actions action = new Actions(driver);
+		action.moveToElement(dataLink).build().perform();
+		dataDownloadLink.click();
+  	}
 
 	public void clickOnCompanyLink() {
 		Actions action = new Actions(driver);
@@ -128,7 +164,56 @@ public class HomePage extends TestBase {
 		action.moveToElement(companySetupLink).moveToElement(locationLink).build().perform();
 		locationLink.click();
 	}
-
+    public void clickOnGstnLink() throws Exception {
+    	Actions action = new Actions(driver);
+    	action.moveToElement(companySetupLink).moveToElement(gstnLink).build().perform();
+    	gstnLink.click();
+    	Thread.sleep(3000);
+    }
+    public void clickOnUserLink() throws Exception {
+    	Actions action = new Actions(driver);
+    	action.moveToElement(companySetupLink).moveToElement(userLink).build().perform();
+    	userLink.click();
+    	Thread.sleep(3000);
+    }
+    public void clickOnAssignRoleLink() throws Exception {
+    	Actions action = new Actions(driver);
+    	action.moveToElement(companySetupLink).moveToElement(assignRoleLink).build().perform();
+    	assignRoleLink.click();
+    	Thread.sleep(3000);
+    }
+    /////////////////
+    public void clickOnCustomerMasterLink() throws Exception {
+    	Actions action = new Actions(driver);
+    	action.moveToElement(masterDataLink).moveToElement(customerMasterLink).build().perform();
+    	customerMasterLink.click();
+    	Thread.sleep(3000);
+    }
+    public void clickOnSupplierMasterLink() throws Exception {
+    	Actions action = new Actions(driver);
+    	action.moveToElement(masterDataLink).moveToElement(supplierMasterLink).build().perform();
+    	supplierMasterLink.click();
+    	Thread.sleep(3000);
+    }
+    public void clickOnProductMasterLink() throws Exception {
+    	Actions action = new Actions(driver);
+    	action.moveToElement(masterDataLink).moveToElement(productMasterLink).build().perform();
+    	productMasterLink.click();
+    	Thread.sleep(3000);
+    }
+    public void clickOntransporterMasterLink() throws Exception {
+    	Actions action = new Actions(driver);
+    	action.moveToElement(masterDataLink).moveToElement(transporterMasterLink).build().perform();
+    	transporterMasterLink.click();
+    	Thread.sleep(3000);
+    }
+    public void clickOnLogisticsMasterLink() throws Exception {
+    	Actions action = new Actions(driver);
+    	action.moveToElement(masterDataLink).moveToElement(logisticsMasterLink).build().perform();
+    	logisticsMasterLink.click();
+    	Thread.sleep(3000);
+    }
+    //////////////////////
 	public void clickonGenerateLink() {
 		Actions action = new Actions(driver);
 		action.moveToElement(GenerateLink).build().perform();
